@@ -83,9 +83,14 @@ def standardize_names(data):
 
 
 def print_first_n_lines(data, n):
-    print(f"Displaying first {n} lines:")
+    data = np.array(data)
+    print(f"Displaying first {n} rows of {data.shape[0]}:")
     for row in data[:n]:
-        print(row)
+        if isinstance(row, tuple):
+            print(*row)
+        else:
+            print(row)
+    print(f"... {data[:,0].size - n} more rows\n")
 
 
 selected_file = select_mitab_file()

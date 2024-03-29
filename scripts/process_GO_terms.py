@@ -1,7 +1,7 @@
 """
-=======================
-process_GO_terms_txt.py
-=======================
+===================
+process_GO_terms.py
+===================
 
 Processes "go-basic.txt" into separate GO terms with their relevant attributes
 Assumes "go-basic.txt" is in the directory "..\assets\go-basic.txt"
@@ -18,7 +18,7 @@ BIOENGR 175 (Machine Learning and Data-Driven Modeling in Bioengineering) is a c
 import numpy as np
 
 input_file_path = r"..\assets\go-basic.txt"
-cols_to_delete = []#[0, 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16]
+cols_to_delete = [] #[0, 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16]
 
 
 def parse_terms_from_file(file_path):
@@ -84,7 +84,20 @@ def process_and_delete():
     go_terms = np.delete(raw_go_terms, cols_to_delete, axis=1)
     cols = np.delete(raw_cols, cols_to_delete)
 
-    return go_terms
+    return go_terms, cols
 
 
-go_terms = process_and_delete()
+def print_first_n_lines(cols, data, n):
+    print(f"Displaying first {n} lines:")
+    for i in range(0, n):
+        for item1, item2 in zip(cols, data[i]):
+            print("{:<{width}} {}".format(item1, item2, width=15))
+        print("\n")
+        
+
+go_terms, cols = process_and_delete()
+
+if len(go_terms) != 0:
+    print_first_n_lines(cols, go_terms, n=5)
+else:
+    print("No data to display.")
